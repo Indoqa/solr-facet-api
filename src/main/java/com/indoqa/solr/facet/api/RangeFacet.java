@@ -56,24 +56,26 @@ public class RangeFacet extends AbstractFacet {
         this.writeValueSeparator(jsonWriter);
         this.writeStringField(jsonWriter, PARAM_END, this.toString(this.end));
         this.writeValueSeparator(jsonWriter);
-        this.writeStringField(jsonWriter, PARAM_GAP, this.toString(this.gapUnit, this.gapValue));
+        this.writeStringField(jsonWriter, PARAM_GAP, this.toString(this.gapValue, this.gapUnit));
     }
 
     private String toString(Date date) {
-        StringBuilder sb = new StringBuilder();
         try {
-            DateUtil.formatDate(date, Calendar.getInstance(), sb);
+            StringBuilder stringBuilder = new StringBuilder();
+            DateUtil.formatDate(date, Calendar.getInstance(), stringBuilder);
+            return stringBuilder.toString();
         } catch (IOException e) {
             throw new FacetMarshallingException(e);
         }
-        return sb.toString();
     }
 
-    private String toString(GapUnit unit, int value) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(PLUS);
-        sb.append(value);
-        sb.append(GapUnit.DAYS);
-        return sb.toString();
+    private String toString(int value, GapUnit unit) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append(PLUS);
+        stringBuilder.append(value);
+        stringBuilder.append(unit);
+
+        return stringBuilder.toString();
     }
 }
