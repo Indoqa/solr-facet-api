@@ -75,6 +75,12 @@ public abstract class AbstractFacet implements Facet {
         return charArr.toString();
     }
 
+    protected void writeBooleanField(JSONWriter jsonWriter, String name, boolean value) {
+        jsonWriter.write(name);
+        jsonWriter.writeNameSeparator();
+        jsonWriter.write(value);
+    }
+
     protected abstract void writeFacetConfiguration(JSONWriter jsonWriter);
 
     protected void writeFacets(JSONWriter jsonWriter, List<Facet> facets) {

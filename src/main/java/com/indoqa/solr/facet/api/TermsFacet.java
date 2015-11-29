@@ -23,9 +23,11 @@ public class TermsFacet extends AbstractFacet {
     private static final String TYPE_TERMS = "terms";
     private static final String PARAM_LIMIT = "limit";
     private static final String PARAM_FIELD = "field";
+    private static final String PARAM_NUM_BUCKETS = "numBuckets";
 
     private Integer limit;
-    private String field;
+    private final String field;
+    private boolean numBuckets;
 
     public TermsFacet(String name, String field) {
         this(name, field, null);
@@ -38,12 +40,22 @@ public class TermsFacet extends AbstractFacet {
         this.limit = limit;
     }
 
+    public void setNumBuckets(boolean numBuckets) {
+        this.numBuckets = numBuckets;
+    }
+
     @Override
     protected void writeFacetConfiguration(JSONWriter jsonWriter) {
         this.writeStringField(jsonWriter, PARAM_FIELD, this.field);
+
         if (this.limit != null) {
             this.writeValueSeparator(jsonWriter);
             this.writeNumberField(jsonWriter, PARAM_LIMIT, this.limit);
+        }
+
+        if (this.numBuckets) {
+            this.writeValueSeparator(jsonWriter);
+            this.writeBooleanField(jsonWriter, PARAM_NUM_BUCKETS, this.numBuckets);
         }
     }
 }
