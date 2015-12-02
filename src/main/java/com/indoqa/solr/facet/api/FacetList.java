@@ -24,6 +24,14 @@ public class FacetList extends AbstractFacet {
         super(null, null);
     }
 
+    public static String toJsonString(Facet facet) {
+        FacetList facetList = new FacetList();
+
+        facetList.addSubFacet(facet);
+
+        return facet.toJsonString();
+    }
+
     @Override
     public void streamToJson(JSONWriter jsonWriter) {
         if (this.subFacets.isEmpty()) {

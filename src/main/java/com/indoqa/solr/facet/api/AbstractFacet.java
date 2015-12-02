@@ -30,6 +30,7 @@ public abstract class AbstractFacet implements Facet {
 
     private String name;
     private String type;
+
     protected List<Facet> subFacets = new ArrayList<>();
 
     public AbstractFacet(String type, String name) {
@@ -75,8 +76,8 @@ public abstract class AbstractFacet implements Facet {
         return charArr.toString();
     }
 
-    protected void writeBooleanField(JSONWriter jsonWriter, String name, boolean value) {
-        jsonWriter.write(name);
+    protected void writeBooleanField(JSONWriter jsonWriter, String fieldName, boolean value) {
+        jsonWriter.write(fieldName);
         jsonWriter.writeNameSeparator();
         jsonWriter.write(value);
     }
@@ -93,14 +94,14 @@ public abstract class AbstractFacet implements Facet {
         }
     }
 
-    protected void writeNumberField(JSONWriter jsonWriter, String name, Number value) {
-        jsonWriter.write(name);
+    protected void writeNumberField(JSONWriter jsonWriter, String fieldName, Number value) {
+        jsonWriter.write(fieldName);
         jsonWriter.writeNameSeparator();
         jsonWriter.write(value);
     }
 
-    protected void writeStringField(JSONWriter jsonWriter, String name, String value) {
-        jsonWriter.write(name);
+    protected void writeStringField(JSONWriter jsonWriter, String fieldName, String value) {
+        jsonWriter.write(fieldName);
         jsonWriter.writeNameSeparator();
         jsonWriter.write(value);
     }

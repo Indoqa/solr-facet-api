@@ -17,7 +17,6 @@
 package com.indoqa.solr.facet.api;
 
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.solr.common.util.DateUtil;
@@ -62,7 +61,7 @@ public class RangeFacet extends AbstractFacet {
     private String toString(Date date) {
         try {
             StringBuilder stringBuilder = new StringBuilder();
-            DateUtil.formatDate(date, Calendar.getInstance(), stringBuilder);
+            DateUtil.formatDate(date, null, stringBuilder);
             return stringBuilder.toString();
         } catch (IOException e) {
             throw new FacetMarshallingException(e);

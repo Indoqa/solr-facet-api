@@ -21,13 +21,22 @@ import org.noggit.JSONWriter;
 public class TermsFacet extends AbstractFacet {
 
     private static final String TYPE_TERMS = "terms";
+
+    private static final String PARAM_SORT = "sort";
     private static final String PARAM_LIMIT = "limit";
     private static final String PARAM_FIELD = "field";
+    private static final String PARAM_OFFSET = "offset";
+    private static final String PARAM_MINCOUNT = "mincount";
     private static final String PARAM_NUM_BUCKETS = "numBuckets";
 
-    private Integer limit;
     private final String field;
+
+    private Integer limit;
+    private Integer offset;
+    private Integer mincount;
     private boolean numBuckets;
+
+    private String sort;
 
     public TermsFacet(String name, String field) {
         this(name, field, null);
@@ -40,17 +49,60 @@ public class TermsFacet extends AbstractFacet {
         this.limit = limit;
     }
 
+    public Integer getLimit() {
+        return this.limit;
+    }
+
+    public Integer getMincount() {
+        return this.mincount;
+    }
+
+    public Integer getOffset() {
+        return this.offset;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
+
+    public void setMincount(Integer mincount) {
+        this.mincount = mincount;
+    }
+
     public void setNumBuckets(boolean numBuckets) {
         this.numBuckets = numBuckets;
+    }
+
+    public void setOffset(Integer offset) {
+        this.offset = offset;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
     }
 
     @Override
     protected void writeFacetConfiguration(JSONWriter jsonWriter) {
         this.writeStringField(jsonWriter, PARAM_FIELD, this.field);
 
+        if (this.sort != null) {
+            this.writeValueSeparator(jsonWriter);
+            this.writeStringField(jsonWriter, PARAM_SORT, this.sort);
+        }
+
+        if (this.offset != null) {
+            this.writeValueSeparator(jsonWriter);
+            this.writeNumberField(jsonWriter, PARAM_OFFSET, this.offset);
+        }
+
         if (this.limit != null) {
             this.writeValueSeparator(jsonWriter);
             this.writeNumberField(jsonWriter, PARAM_LIMIT, this.limit);
+        }
+
+        if (this.mincount != null) {
+            this.writeValueSeparator(jsonWriter);
+            this.writeNumberField(jsonWriter, PARAM_MINCOUNT, this.mincount);
         }
 
         if (this.numBuckets) {
