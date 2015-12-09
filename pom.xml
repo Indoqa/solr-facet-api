@@ -26,7 +26,7 @@
     <version>1</version>
   </parent>  
 
-  <groupId>com.indoqa</groupId>
+  <groupId>com.indoqa.solr</groupId>
   <artifactId>indoqa-solr-facet-api</artifactId>
   <version>0.1-SNAPSHOT</version>
   

@@ -18,27 +18,20 @@ package com.indoqa.solr.facet.api;
 
 import org.noggit.JSONWriter;
 
-public class FacetList extends AbstractFacet {
+public class StatisticFacet extends AbstractFacet {
 
-    public FacetList() {
-        super(null, null);
-    }
+    private String function;
 
-    public static String toJsonString(Facet facet) {
-        FacetList facetList = new FacetList();
-
-        facetList.addSubFacet(facet);
-
-        return facet.toJsonString();
+    public StatisticFacet(String name, String function) {
+        super("statistic", name);
+        this.function = function;
     }
 
     @Override
     public void streamToJson(JSONWriter jsonWriter) {
-        if (!this.hasSubFacets()) {
-            return;
-        }
-
-        this.writeFacets(jsonWriter, this.subFacets);
+        jsonWriter.write(this.getName());
+        jsonWriter.writeNameSeparator();
+        jsonWriter.writeString(this.function);
     }
 
     @Override

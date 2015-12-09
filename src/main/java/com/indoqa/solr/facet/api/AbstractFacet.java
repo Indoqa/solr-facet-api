@@ -44,6 +44,18 @@ public abstract class AbstractFacet implements Facet {
         return this;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
+    public int getSubFacetCount() {
+        return this.subFacets.size();
+    }
+
+    public boolean hasSubFacets() {
+        return !this.subFacets.isEmpty();
+    }
+
     @Override
     public void streamToJson(JSONWriter jsonWriter) {
         jsonWriter.write(this.name);
