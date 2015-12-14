@@ -23,7 +23,7 @@
   <parent>
     <groupId>com.indoqa</groupId>
     <artifactId>indoqa-oss-parent</artifactId>
-    <version>1</version>
+    <version>4</version>
   </parent>  
 
   <groupId>com.indoqa.solr</groupId>
@@ -31,7 +31,7 @@
   <version>0.1-SNAPSHOT</version>
   
   <name>Indoqa Solr Facet API</name>
-  <url>https://github.com/indoqa/solr-facet-api</url>
+  <url>https://github.com/Indoqa/solr-facet-api</url>
   <description>Java API to use Solr Facet API (Solr 5.1 and higher)</description>
   
   <scm>
