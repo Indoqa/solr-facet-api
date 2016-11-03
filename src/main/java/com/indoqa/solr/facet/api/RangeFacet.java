@@ -16,10 +16,9 @@
  */
 package com.indoqa.solr.facet.api;
 
-import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-import org.apache.solr.common.util.DateUtil;
 import org.noggit.JSONWriter;
 
 public class RangeFacet extends AbstractFacet {
@@ -59,13 +58,9 @@ public class RangeFacet extends AbstractFacet {
     }
 
     private String toString(Date date) {
-        try {
-            StringBuilder stringBuilder = new StringBuilder();
-            DateUtil.formatDate(date, null, stringBuilder);
-            return stringBuilder.toString();
-        } catch (IOException e) {
-            throw new FacetMarshallingException(e);
-        }
+        StringBuilder stringBuilder = new StringBuilder();
+        DateTimeFormatter.ISO_INSTANT.formatTo(date.toInstant(), stringBuilder);
+        return stringBuilder.toString();
     }
 
     private String toString(int value, GapUnit unit) {

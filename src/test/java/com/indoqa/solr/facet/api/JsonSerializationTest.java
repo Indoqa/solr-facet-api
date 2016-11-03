@@ -16,6 +16,8 @@
  */
 package com.indoqa.solr.facet.api;
 
+import java.util.Date;
+
 import org.junit.Test;
 
 public class JsonSerializationTest {
@@ -25,6 +27,15 @@ public class JsonSerializationTest {
         FacetList facetList = new FacetList();
         TermsFacet termsFacet = new TermsFacet("abc", "abc");
         facetList.addSubFacet(termsFacet);
+
+        System.out.println(facetList.toJsonString());
+    }
+
+    @Test
+    public void testDateRangeFacet() {
+        FacetList facetList = new FacetList();
+        RangeFacet rangeFacet = new RangeFacet("name", "field", new Date(), new Date(), GapUnit.MINUTES, 1);
+        facetList.addSubFacet(rangeFacet);
 
         System.out.println(facetList.toJsonString());
     }
