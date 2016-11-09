@@ -19,6 +19,7 @@ package com.indoqa.solr.facet.api;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.util.NamedList;
@@ -89,5 +90,9 @@ public class Buckets implements Iterable<NamedList<Object>> {
     @Override
     public Iterator<NamedList<Object>> iterator() {
         return this.buckets.iterator();
+    }
+
+    public Stream<NamedList<Object>> stream() {
+        return this.buckets.stream();
     }
 }
