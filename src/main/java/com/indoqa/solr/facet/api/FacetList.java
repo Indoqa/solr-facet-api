@@ -40,9 +40,4 @@ public class FacetList extends AbstractFacet {
 
         this.writeFacets(jsonWriter, this.subFacets);
     }
-
-    @Override
-    protected void writeFacetConfiguration(JSONWriter jsonWriter) {
-        // nothing to do
-    }
 }

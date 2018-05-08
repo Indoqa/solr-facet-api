@@ -18,19 +18,35 @@ package com.indoqa.solr.facet.api;
 
 import org.noggit.JSONWriter;
 
-public class StatisticFacet extends AbstractFacet {
+public class Domain implements JsonStreamer {
 
-    private String function;
+    private static final String FIELD_DOMAIN = "domain";
+    private static final String FIELD_EXCLUDE_TAGS = "excludeTags";
 
-    public StatisticFacet(String name, String function) {
-        super("statistic", name);
-        this.function = function;
+    private String[] excludeTags;
+
+    public static Domain withExcludeTags(String... excludeTags) {
+        Domain result = new Domain();
+        result.setExcludeTags(excludeTags);
+        return result;
+    }
+
+    public String[] getExcludeTags() {
+        return this.excludeTags;
+    }
+
+    public void setExcludeTags(String[] excludeTags) {
+        this.excludeTags = excludeTags;
     }
 
     @Override
     public void streamToJson(JSONWriter jsonWriter) {
-        jsonWriter.write(this.getName());
+        jsonWriter.write(FIELD_DOMAIN);
         jsonWriter.writeNameSeparator();
-        jsonWriter.writeString(this.function);
+        jsonWriter.startObject();
+        jsonWriter.indent();
+        AbstractFacet.writeArray(jsonWriter, FIELD_EXCLUDE_TAGS, this.excludeTags);
+        jsonWriter.indent();
+        jsonWriter.endObject();
     }
 }

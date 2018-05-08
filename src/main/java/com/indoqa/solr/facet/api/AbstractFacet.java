@@ -30,12 +30,49 @@ public abstract class AbstractFacet implements Facet {
 
     private String name;
     private String type;
+    private Domain domain;
 
     protected List<Facet> subFacets = new ArrayList<>();
 
     public AbstractFacet(String type, String name) {
         this.type = type;
         this.name = name;
+    }
+
+    protected static void writeArray(JSONWriter jsonWriter, String fieldName, Object[] array) {
+        jsonWriter.write(fieldName);
+        jsonWriter.writeNameSeparator();
+
+        if (array.length == 1) {
+            jsonWriter.write(array[0]);
+        } else {
+            jsonWriter.startArray();
+            jsonWriter.write(array);
+            jsonWriter.endArray();
+        }
+    }
+
+    protected static void writeBooleanField(JSONWriter jsonWriter, String fieldName, boolean value) {
+        jsonWriter.write(fieldName);
+        jsonWriter.writeNameSeparator();
+        jsonWriter.write(value);
+    }
+
+    protected static void writeNumberField(JSONWriter jsonWriter, String fieldName, Number value) {
+        jsonWriter.write(fieldName);
+        jsonWriter.writeNameSeparator();
+        jsonWriter.write(value);
+    }
+
+    protected static void writeStringField(JSONWriter jsonWriter, String fieldName, String value) {
+        jsonWriter.write(fieldName);
+        jsonWriter.writeNameSeparator();
+        jsonWriter.write(value);
+    }
+
+    protected static void writeValueSeparator(JSONWriter jsonWriter) {
+        jsonWriter.writeValueSeparator();
+        jsonWriter.indent();
     }
 
     @Override
@@ -56,6 +93,10 @@ public abstract class AbstractFacet implements Facet {
         return !this.subFacets.isEmpty();
     }
 
+    public void setDomain(Domain domain) {
+        this.domain = domain;
+    }
+
     @Override
     public void streamToJson(JSONWriter jsonWriter) {
         jsonWriter.write(this.name);
@@ -63,8 +104,8 @@ public abstract class AbstractFacet implements Facet {
 
         jsonWriter.startObject();
         jsonWriter.indent();
-        this.writeStringField(jsonWriter, FIELD_TYPE, this.type);
-        this.writeValueSeparator(jsonWriter);
+        writeStringField(jsonWriter, FIELD_TYPE, this.type);
+        writeValueSeparator(jsonWriter);
         this.writeFacetConfiguration(jsonWriter);
         this.writeSubFacets(jsonWriter);
         jsonWriter.indent();
@@ -88,34 +129,21 @@ public abstract class AbstractFacet implements Facet {
         return charArr.toString();
     }
 
-    protected void writeBooleanField(JSONWriter jsonWriter, String fieldName, boolean value) {
-        jsonWriter.write(fieldName);
-        jsonWriter.writeNameSeparator();
-        jsonWriter.write(value);
+    protected void writeFacetConfiguration(JSONWriter jsonWriter) {
+        if (this.domain != null) {
+            this.domain.streamToJson(jsonWriter);
+            writeValueSeparator(jsonWriter);
+        }
     }
-
-    protected abstract void writeFacetConfiguration(JSONWriter jsonWriter);
 
     protected void writeFacets(JSONWriter jsonWriter, List<Facet> facets) {
         for (ListIterator<Facet> it = facets.listIterator(); it.hasNext();) {
             it.next().streamToJson(jsonWriter);
 
             if (it.hasNext()) {
-                this.writeValueSeparator(jsonWriter);
+                writeValueSeparator(jsonWriter);
             }
         }
-    }
-
-    protected void writeNumberField(JSONWriter jsonWriter, String fieldName, Number value) {
-        jsonWriter.write(fieldName);
-        jsonWriter.writeNameSeparator();
-        jsonWriter.write(value);
-    }
-
-    protected void writeStringField(JSONWriter jsonWriter, String fieldName, String value) {
-        jsonWriter.write(fieldName);
-        jsonWriter.writeNameSeparator();
-        jsonWriter.write(value);
     }
 
     protected void writeSubFacets(JSONWriter jsonWriter) {
@@ -123,7 +151,7 @@ public abstract class AbstractFacet implements Facet {
             return;
         }
 
-        this.writeValueSeparator(jsonWriter);
+        writeValueSeparator(jsonWriter);
         jsonWriter.write(FIELD_FACET);
         jsonWriter.writeNameSeparator();
 
@@ -132,10 +160,5 @@ public abstract class AbstractFacet implements Facet {
         this.writeFacets(jsonWriter, this.subFacets);
         jsonWriter.indent();
         jsonWriter.endObject();
-    }
-
-    protected void writeValueSeparator(JSONWriter jsonWriter) {
-        jsonWriter.writeValueSeparator();
-        jsonWriter.indent();
     }
 }

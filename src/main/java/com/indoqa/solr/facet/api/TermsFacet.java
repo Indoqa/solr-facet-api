@@ -83,6 +83,8 @@ public class TermsFacet extends AbstractFacet {
 
     @Override
     protected void writeFacetConfiguration(JSONWriter jsonWriter) {
+        super.writeFacetConfiguration(jsonWriter);
+
         this.writeStringField(jsonWriter, PARAM_FIELD, this.field);
 
         if (this.sort != null) {

@@ -33,6 +33,8 @@ public class QueryFacet extends AbstractFacet {
 
     @Override
     protected void writeFacetConfiguration(JSONWriter jsonWriter) {
+        super.writeFacetConfiguration(jsonWriter);
+
         this.writeStringField(jsonWriter, PARAM_Q, this.query);
     }
 }
