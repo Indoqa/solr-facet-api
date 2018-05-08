@@ -18,6 +18,6 @@ package com.indoqa.solr.facet.api;
 
 public enum GapUnit {
 
-    DAYS, HOURS, MINUTES, SECONDS
+    YEARS, MONTHS, WEEKS, DAYS, HOURS, MINUTES, SECONDS
 
 }

@@ -16,6 +16,7 @@
  */
 package com.indoqa.solr.facet.api;
 
+import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -31,12 +32,12 @@ public class RangeFacet extends AbstractFacet {
     private static final String PARAM_FIELD = "field";
 
     private final String field;
-    private final Date start;
-    private final Date end;
+    private final String start;
+    private final String end;
     private final GapUnit gapUnit;
     private final int gapValue;
 
-    public RangeFacet(String name, String field, Date start, Date end, GapUnit gapUnit, int gapValue) {
+    private RangeFacet(String name, String field, String start, String end, GapUnit gapUnit, int gapValue) {
         super(TYPE_RANGE, name);
 
         this.field = field;
@@ -46,23 +47,30 @@ public class RangeFacet extends AbstractFacet {
         this.gapValue = gapValue;
     }
 
+    public static RangeFacet fromDates(String name, String field, Date start, Date end, GapUnit gapUnit, int gapValue) {
+        return fromInstants(name, field, start.toInstant(), end.toInstant(), gapUnit, gapValue);
+    }
+
+    public static RangeFacet fromInstants(String name, String field, Instant start, Instant end, GapUnit gapUnit, int gapValue) {
+        return fromStrings(name, field, DateTimeFormatter.ISO_INSTANT.format(start), DateTimeFormatter.ISO_INSTANT.format(end),
+            gapUnit, gapValue);
+    }
+
+    public static RangeFacet fromStrings(String name, String field, String start, String end, GapUnit gapUnit, int gapValue) {
+        return new RangeFacet(name, field, start, end, gapUnit, gapValue);
+    }
+
     @Override
     protected void writeFacetConfiguration(JSONWriter jsonWriter) {
         super.writeFacetConfiguration(jsonWriter);
 
-        this.writeStringField(jsonWriter, PARAM_FIELD, this.field);
-        this.writeValueSeparator(jsonWriter);
-        this.writeStringField(jsonWriter, PARAM_START, this.toString(this.start));
-        this.writeValueSeparator(jsonWriter);
-        this.writeStringField(jsonWriter, PARAM_END, this.toString(this.end));
-        this.writeValueSeparator(jsonWriter);
-        this.writeStringField(jsonWriter, PARAM_GAP, this.toString(this.gapValue, this.gapUnit));
-    }
-
-    private String toString(Date date) {
-        StringBuilder stringBuilder = new StringBuilder();
-        DateTimeFormatter.ISO_INSTANT.formatTo(date.toInstant(), stringBuilder);
-        return stringBuilder.toString();
+        writeStringField(jsonWriter, PARAM_FIELD, this.field);
+        writeValueSeparator(jsonWriter);
+        writeStringField(jsonWriter, PARAM_START, this.start);
+        writeValueSeparator(jsonWriter);
+        writeStringField(jsonWriter, PARAM_END, this.end);
+        writeValueSeparator(jsonWriter);
+        writeStringField(jsonWriter, PARAM_GAP, this.toString(this.gapValue, this.gapUnit));
     }
 
     private String toString(int value, GapUnit unit) {

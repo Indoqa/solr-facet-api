@@ -34,7 +34,7 @@ public class JsonSerializationTest {
     @Test
     public void testDateRangeFacet() {
         FacetList facetList = new FacetList();
-        RangeFacet rangeFacet = new RangeFacet("name", "field", new Date(), new Date(), GapUnit.MINUTES, 1);
+        RangeFacet rangeFacet = RangeFacet.fromDates("name", "field", new Date(), new Date(), GapUnit.MINUTES, 1);
         facetList.addSubFacet(rangeFacet);
 
         System.out.println(facetList.toJsonString());
