@@ -22,8 +22,13 @@ public class Domain implements JsonStreamer {
 
     private static final String FIELD_DOMAIN = "domain";
     private static final String FIELD_EXCLUDE_TAGS = "excludeTags";
+    private static final String FIELD_BLOCK_CHILDREN = "blockChildren";
+    private static final String FIELD_BLOCK_PARENT = "blockParent";
 
     private String[] excludeTags;
+
+    private String blockChildren;
+    private String blockParent;
 
     public static Domain withExcludeTags(String... excludeTags) {
         Domain result = new Domain();
@@ -31,11 +36,27 @@ public class Domain implements JsonStreamer {
         return result;
     }
 
+    public String getBlockChildren() {
+        return this.blockChildren;
+    }
+
+    public String getBlockParent() {
+        return this.blockParent;
+    }
+
     public String[] getExcludeTags() {
         return this.excludeTags;
     }
 
-    public void setExcludeTags(String[] excludeTags) {
+    public void setBlockChildren(String blockChildren) {
+        this.blockChildren = blockChildren;
+    }
+
+    public void setBlockParent(String blockParent) {
+        this.blockParent = blockParent;
+    }
+
+    public void setExcludeTags(String... excludeTags) {
         this.excludeTags = excludeTags;
     }
 
@@ -44,8 +65,22 @@ public class Domain implements JsonStreamer {
         jsonWriter.write(FIELD_DOMAIN);
         jsonWriter.writeNameSeparator();
         jsonWriter.startObject();
-        jsonWriter.indent();
-        AbstractFacet.writeArray(jsonWriter, FIELD_EXCLUDE_TAGS, this.excludeTags);
+
+        if (this.excludeTags != null) {
+            jsonWriter.indent();
+            AbstractFacet.writeArray(jsonWriter, FIELD_EXCLUDE_TAGS, this.excludeTags);
+        }
+
+        if (this.blockChildren != null) {
+            jsonWriter.indent();
+            AbstractFacet.writeStringField(jsonWriter, FIELD_BLOCK_CHILDREN, this.blockChildren);
+        }
+
+        if (this.blockParent != null) {
+            jsonWriter.indent();
+            AbstractFacet.writeStringField(jsonWriter, FIELD_BLOCK_PARENT, this.blockParent);
+        }
+
         jsonWriter.indent();
         jsonWriter.endObject();
     }

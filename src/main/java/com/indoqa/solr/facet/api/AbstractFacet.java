@@ -81,6 +81,10 @@ public abstract class AbstractFacet implements Facet {
         return this;
     }
 
+    public Domain getDomain() {
+        return this.domain;
+    }
+
     public String getName() {
         return this.name;
     }
