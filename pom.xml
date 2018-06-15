@@ -28,7 +28,7 @@
 
   <groupId>com.indoqa.solr</groupId>
   <artifactId>solr-facet-api</artifactId>
-  <version>0.2.1</version>
+  <version>0.2.2-SNAPSHOT</version>
   
   <name>Indoqa Solr Facet API</name>
   <url>https://github.com/Indoqa/solr-facet-api</url>
@@ -38,7 +38,7 @@
     <connection>scm:git:git@github.com:Indoqa/solr-facet-api.git</connection>
     <developerConnection>scm:git:git@github.com:Indoqa/solr-facet-api.git</developerConnection>
     <url>https://github.com/Indoqa/solr-facet-api</url>
-    <tag>solr-facet-api-0.2.1</tag>
+    <tag>HEAD</tag>
   </scm>
 
 
