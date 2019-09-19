@@ -1,3 +1,3 @@
 # indoqa-solr-facet-api
-Java API for Solr facets (5.1 and higher)
 
+A Java API for [Apache Solr's](https://lucene.apache.org/solr/) [JSON facets](https://lucene.apache.org/solr/guide/7_2/json-facet-api.html)
