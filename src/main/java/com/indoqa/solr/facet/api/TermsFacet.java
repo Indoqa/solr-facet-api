@@ -28,6 +28,7 @@ public class TermsFacet extends AbstractFacet {
     private static final String PARAM_OFFSET = "offset";
     private static final String PARAM_MINCOUNT = "mincount";
     private static final String PARAM_NUM_BUCKETS = "numBuckets";
+    private static final String PARAM_PREFIX = "prefix";
 
     private final String field;
 
@@ -37,6 +38,7 @@ public class TermsFacet extends AbstractFacet {
     private boolean numBuckets;
 
     private String sort;
+    private String prefix;
 
     public TermsFacet(String name, String field) {
         this(name, field, null);
@@ -61,6 +63,10 @@ public class TermsFacet extends AbstractFacet {
         return this.offset;
     }
 
+    public String getPrefix() {
+        return this.prefix;
+    }
+
     public void setLimit(Integer limit) {
         this.limit = limit;
     }
@@ -77,6 +83,10 @@ public class TermsFacet extends AbstractFacet {
         this.offset = offset;
     }
 
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
     public void setSort(String sort) {
         this.sort = sort;
     }
@@ -85,31 +95,36 @@ public class TermsFacet extends AbstractFacet {
     protected void writeFacetConfiguration(JSONWriter jsonWriter) {
         super.writeFacetConfiguration(jsonWriter);
 
-        this.writeStringField(jsonWriter, PARAM_FIELD, this.field);
+        writeStringField(jsonWriter, PARAM_FIELD, this.field);
 
         if (this.sort != null) {
-            this.writeValueSeparator(jsonWriter);
-            this.writeStringField(jsonWriter, PARAM_SORT, this.sort);
+            writeValueSeparator(jsonWriter);
+            writeStringField(jsonWriter, PARAM_SORT, this.sort);
         }
 
         if (this.offset != null) {
-            this.writeValueSeparator(jsonWriter);
-            this.writeNumberField(jsonWriter, PARAM_OFFSET, this.offset);
+            writeValueSeparator(jsonWriter);
+            writeNumberField(jsonWriter, PARAM_OFFSET, this.offset);
         }
 
         if (this.limit != null) {
-            this.writeValueSeparator(jsonWriter);
-            this.writeNumberField(jsonWriter, PARAM_LIMIT, this.limit);
+            writeValueSeparator(jsonWriter);
+            writeNumberField(jsonWriter, PARAM_LIMIT, this.limit);
         }
 
         if (this.mincount != null) {
-            this.writeValueSeparator(jsonWriter);
-            this.writeNumberField(jsonWriter, PARAM_MINCOUNT, this.mincount);
+            writeValueSeparator(jsonWriter);
+            writeNumberField(jsonWriter, PARAM_MINCOUNT, this.mincount);
         }
 
         if (this.numBuckets) {
-            this.writeValueSeparator(jsonWriter);
-            this.writeBooleanField(jsonWriter, PARAM_NUM_BUCKETS, this.numBuckets);
+            writeValueSeparator(jsonWriter);
+            writeBooleanField(jsonWriter, PARAM_NUM_BUCKETS, this.numBuckets);
+        }
+
+        if (this.prefix != null) {
+            writeValueSeparator(jsonWriter);
+            writeStringField(jsonWriter, PARAM_PREFIX, this.prefix);
         }
     }
 }
