@@ -46,9 +46,7 @@ public abstract class AbstractFacet implements Facet {
         if (array.length == 1) {
             jsonWriter.write(array[0]);
         } else {
-            jsonWriter.startArray();
             jsonWriter.write(array);
-            jsonWriter.endArray();
         }
     }
 

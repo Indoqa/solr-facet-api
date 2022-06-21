@@ -1,0 +1,12 @@
+{
+  "name":{
+    "type":"terms",
+    "domain":{
+      "excludeTags":[
+        "exclude1",
+        "exclude2"]
+      },
+    "field":"field",
+    "limit":5
+    }
+  }

@@ -1,0 +1,9 @@
+{
+  "name":{
+    "type":"range",
+    "field":"field",
+    "start":"2022-01-01T00:00:00Z",
+    "end":"2022-01-02T00:00:00Z",
+    "gap":"+1MINUTES"
+    }
+  }

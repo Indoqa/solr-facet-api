@@ -1,0 +1,6 @@
+{
+  "abc":{
+    "type":"terms",
+    "field":"abc"
+    }
+  }
